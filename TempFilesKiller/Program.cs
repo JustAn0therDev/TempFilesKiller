@@ -50,6 +50,7 @@ namespace TempFilesKiller
                         FileInfo[] files = directoryInfo.GetFiles();
 
                         Console.WriteLine($"Deleting files for directory: {directoryInfo.FullName}");
+
                         for (int j = 0; j < files.Length; j++)
                         {
                             try
@@ -62,8 +63,13 @@ namespace TempFilesKiller
                             }
                         }
 
-                        Console.WriteLine($"Deleting directory: {directoryInfo.FullName}");
-                        Directory.Delete(arrayOfDirectories[i]);
+                        if (directoryInfo.GetFiles().Length == 0)
+                        {
+                            Console.WriteLine($"Deleting directory: {directoryInfo.FullName}");
+                            Directory.Delete(arrayOfDirectories[i]);
+                        }
+                        else
+                            Console.WriteLine($"Can't delete directory '{directoryInfo.FullName}' because it's not empty!");
                     }
                 }
                 else
