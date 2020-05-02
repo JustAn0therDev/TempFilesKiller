@@ -11,7 +11,7 @@ namespace TempFilesKiller
         public string[] ArrayOfFilesOutSideSubDirectories { get; set; }
         public DirectoryInfo MainTempDirectory { get; set; }
 
-        public void PopulateInitialValues()
+        public DirectoryHandler()
         {
             ArrayOfDirectories = Directory.GetDirectories(TEMP_DIRECTORY_PATH);
             ArrayOfFilesOutSideSubDirectories = Directory.GetFiles(TEMP_DIRECTORY_PATH);
@@ -26,6 +26,7 @@ namespace TempFilesKiller
                 Console.WriteLine(ArrayOfDirectories[i]);
             }
 
+            Console.WriteLine();
             Console.WriteLine("------");
             Console.WriteLine();
 
@@ -78,7 +79,7 @@ namespace TempFilesKiller
                 Console.WriteLine("There are no directories in the temp folder for me to delete!");
         }
 
-        public void DeleteAllFilesInMainTempDirectory()
+        private void DeleteAllFilesInMainTempDirectory()
         {
             FileInfo[] filesOutsideSubDirectories = MainTempDirectory.GetFiles();
 
@@ -100,6 +101,8 @@ namespace TempFilesKiller
             }
             else
                 Utils.TreatConditionalMessage("There are no files in the temp folder for me to delete!");
+
+            Console.WriteLine();
         }
 
         private void DeleteAllSubDirectoriesInDirectory(string currentDirectoryName)

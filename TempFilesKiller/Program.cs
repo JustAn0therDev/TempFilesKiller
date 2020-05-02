@@ -9,14 +9,11 @@ namespace TempFilesKiller
             try
             {
                 using DirectoryHandler directoryHandler = new DirectoryHandler();
-                directoryHandler.PopulateInitialValues();
                 Console.Write("Do you want do see which and how many files are in the temp folder? (Y/N): ");
                 string userResponse = Console.ReadLine();
 
                 if (userResponse.ToUpper() == "Y")
-                {
                     directoryHandler.ShowAllDirectoriesAndFilesInTheTempFolder();
-                }
 
                 Console.Write("Do you want to delete all files and directories of the temp folder? (Y/N): ");
                 userResponse = Console.ReadLine();
@@ -27,7 +24,6 @@ namespace TempFilesKiller
                     Console.WriteLine("Ok, I won't do anything.");
 
                 Environment.Exit(0);
-
             }
             catch (Exception e)
             {
