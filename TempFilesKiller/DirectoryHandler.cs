@@ -6,6 +6,7 @@ namespace TempFilesKiller
     class DirectoryHandler : IDisposable
     {
         private const string TEMP_DIRECTORY_PATH = "C:/Users/highl/AppData/Local/Temp";
+        private const bool IS_RECURSIVE = true;
 
         public string[] ArrayOfDirectories { get; set; }
         public string[] ArrayOfFilesOutSideSubDirectories { get; set; }
@@ -61,7 +62,7 @@ namespace TempFilesKiller
                             }
                             catch (Exception ex)
                             {
-                                Utils.TreatConsoleMessageForException($"Couldn't delete the file because of the following error: {ex.Message}");
+                                Utils.TreatExceptionMessage($"Couldn't delete the file because of the following error: {ex.Message}");
                             }
                         }
                     }
@@ -95,7 +96,7 @@ namespace TempFilesKiller
                     }
                     catch (Exception ex)
                     {
-                        Utils.TreatConsoleMessageForException($"Couldn't delete the file because of the following error: {ex.Message}");
+                        Utils.TreatExceptionMessage($"Couldn't delete the file because of the following error: {ex.Message}");
                     }
                 }
             }
@@ -108,13 +109,10 @@ namespace TempFilesKiller
         private void DeleteAllSubDirectoriesInDirectory(string currentDirectoryName)
         {
             Console.WriteLine($"Deleting directory: {currentDirectoryName}");
-            Directory.Delete(currentDirectoryName, true);
+            Directory.Delete(currentDirectoryName, IS_RECURSIVE);
             Utils.TreatSuccessMessage($"Directory: '{currentDirectoryName} deleted!'");
         }
 
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-        }
+        public void Dispose() => GC.SuppressFinalize(this);
     }
 }

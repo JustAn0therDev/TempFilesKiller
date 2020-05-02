@@ -8,7 +8,7 @@
             Console.WriteLine(message);
             Console.ResetColor();
         }
-        public static void TreatConsoleMessageForException(string exceptionMessage)
+        public static void TreatExceptionMessage(string exceptionMessage)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(exceptionMessage);

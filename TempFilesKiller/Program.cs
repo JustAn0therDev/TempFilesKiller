@@ -23,11 +23,11 @@ namespace TempFilesKiller
                 else
                     Console.WriteLine("Ok, I won't do anything.");
 
-                Environment.Exit(0);
+                Console.WriteLine("Press any key to close the program...");
             }
             catch (Exception e)
             {
-                Utils.TreatConsoleMessageForException($"Something bad happened while I was trying to read or delete the files! Error: {e.Message}");
+                Utils.TreatExceptionMessage($"Something bad happened while I was trying to read or delete the files! Error: {e.Message}");
             }
         }
     }
