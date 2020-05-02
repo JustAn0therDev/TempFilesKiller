@@ -8,22 +8,29 @@ namespace TempFilesKiller
         {
             try
             {
-                using DirectoryHandler directoryHandler = new DirectoryHandler();
-                Console.Write("Do you want do see which and how many files are in the temp folder? (Y/N): ");
-                string userResponse = Console.ReadLine();
+                Console.Write("Do you want to run the program? (Y/N): ");
+                string userResponse = Console.ReadLine().ToUpper();
 
-                if (userResponse.ToUpper() == "Y")
-                    directoryHandler.ShowAllDirectoriesAndFilesInTheTempFolder();
+                while (userResponse != "N")
+                {
+                    using DirectoryHandler directoryHandler = new DirectoryHandler();
+                    Console.Write("Do you want do see which and how many files are in the temp folder? (Y/N): ");
+                    userResponse = Console.ReadLine().ToUpper();
 
-                Console.Write("Do you want to delete all files and directories of the temp folder? (Y/N): ");
-                userResponse = Console.ReadLine();
+                    if (userResponse == "Y")
+                        directoryHandler.ShowAllDirectoriesAndFilesInTheTempFolder();
 
-                if (userResponse.ToUpper() == "Y")
-                    directoryHandler.DeleteAllDirectoriesAndFiles();
-                else
-                    Console.WriteLine("Ok, I won't do anything.");
+                    Console.Write("Do you want to delete all files and directories of the temp folder? (Y/N): ");
+                    userResponse = Console.ReadLine().ToUpper();
 
-                Console.WriteLine("Press any key to close the program...");
+                    if (userResponse == "Y")
+                        directoryHandler.DeleteAllDirectoriesAndFiles();
+                    else
+                        Console.WriteLine("Ok, I won't do anything.");
+
+                    Console.Write("Do you want to run the program again? (Y/N): ");
+                    userResponse = Console.ReadLine().ToUpper();
+                }
             }
             catch (Exception e)
             {

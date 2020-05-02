@@ -108,9 +108,16 @@ namespace TempFilesKiller
 
         private void DeleteAllSubDirectoriesInDirectory(string currentDirectoryName)
         {
-            Console.WriteLine($"Deleting directory: {currentDirectoryName}");
-            Directory.Delete(currentDirectoryName, IS_RECURSIVE);
-            Utils.TreatSuccessMessage($"Directory: '{currentDirectoryName} deleted!'");
+            try
+            {
+                Console.WriteLine($"Deleting directory: {currentDirectoryName}");
+                Directory.Delete(currentDirectoryName, IS_RECURSIVE);
+                Utils.TreatSuccessMessage($"Directory: '{currentDirectoryName} deleted!'");
+            }
+            catch (Exception ex)
+            {
+                Utils.TreatExceptionMessage($"Couldn't delete the current directory because of the following error: {ex.Message}");
+            }
         }
 
         public void Dispose() => GC.SuppressFinalize(this);
