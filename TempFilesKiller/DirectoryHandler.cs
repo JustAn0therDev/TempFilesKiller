@@ -40,12 +40,12 @@ namespace TempFilesKiller
         {
             DeleteAllFilesInMainTempDirectory();
 
-            Console.WriteLine("Deleting directories...");
+            Console.WriteLine("Accessing directories...");
 
             if (ArrayOfDirectories.Length > 0)
                 for (int i = 0; i < ArrayOfDirectories.Length; i++)
                 {
-                    Console.WriteLine($"Accessing diretory {ArrayOfDirectories[i]}...");
+                    Console.WriteLine($"Accessing diretory: {ArrayOfDirectories[i]}...");
                     DirectoryInfo currentDirectory = new DirectoryInfo(ArrayOfDirectories[i]);
 
                     FileInfo[] filesInCurrentDirectory = currentDirectory.GetFiles();
@@ -62,8 +62,6 @@ namespace TempFilesKiller
                             {
                                 Utils.TreatConsoleMessageForException($"Couldn't delete the file because of the following error: {ex.Message}");
                             }
-
-                            Console.WriteLine();
                         }
                     }
 
@@ -108,7 +106,7 @@ namespace TempFilesKiller
         {
             Console.WriteLine($"Deleting directory: {currentDirectoryName}");
             Directory.Delete(currentDirectoryName, true);
-            Utils.TreatSuccessMessage($"Directory '{currentDirectoryName} deleted!'");
+            Utils.TreatSuccessMessage($"Directory: '{currentDirectoryName} deleted!'");
         }
 
         public void Dispose()
