@@ -19,25 +19,6 @@ namespace TempFilesKiller
             MainTempDirectory = new DirectoryInfo(TEMP_DIRECTORY_PATH);
         }
 
-        public void ShowAllDirectoriesAndFilesInTheTempFolder()
-        {
-            Console.WriteLine("List of Directories: ");
-            for (int i = 0; i < ArrayOfDirectories.Length; i++)
-            {
-                Console.WriteLine(ArrayOfDirectories[i]);
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("------");
-            Console.WriteLine();
-
-            Console.WriteLine("List of files outside of subdirectories: ");
-            for (int i = 0; i < ArrayOfFilesOutSideSubDirectories.Length; i++)
-            {
-                Console.WriteLine(ArrayOfFilesOutSideSubDirectories[i]);
-            }
-        }
-
         public void DeleteAllDirectoriesAndFiles()
         {
             DeleteAllFilesInMainTempDirectory();

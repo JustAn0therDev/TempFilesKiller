@@ -14,19 +14,7 @@ namespace TempFilesKiller
                 while (userResponse != "N")
                 {
                     using DirectoryHandler directoryHandler = new DirectoryHandler();
-                    Console.Write("Do you want do see which and how many files are in the temp folder? (Y/N): ");
-                    userResponse = Console.ReadLine().ToUpper();
-
-                    if (userResponse == "Y")
-                        directoryHandler.ShowAllDirectoriesAndFilesInTheTempFolder();
-
-                    Console.Write("Do you want to delete all files and directories of the temp folder? (Y/N): ");
-                    userResponse = Console.ReadLine().ToUpper();
-
-                    if (userResponse == "Y")
-                        directoryHandler.DeleteAllDirectoriesAndFiles();
-                    else
-                        Console.WriteLine("Ok, I won't do anything.");
+                    directoryHandler.DeleteAllDirectoriesAndFiles();
 
                     Console.Write("Do you want to run the program again? (Y/N): ");
                     userResponse = Console.ReadLine().ToUpper();
