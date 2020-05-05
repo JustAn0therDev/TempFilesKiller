@@ -58,14 +58,14 @@ namespace TempFilesKiller
                     Console.WriteLine();
                 }
             else
-                Console.WriteLine("There are no directories in the temp folder for me to delete!");
+                Utils.TreatConditionalMessage("There are no directories in the temp folder to delete!");
         }
 
         private void DeleteAllFilesInMainTempDirectory()
         {
             FileInfo[] filesOutsideSubDirectories = MainTempDirectory.GetFiles();
 
-            Console.WriteLine($"Deleting files outside the sub-directories...");
+            Console.WriteLine($"Attempting to delete files outside the sub-directories...");
             if (ArrayOfFilesOutSideSubDirectories.Length > 0)
             {
                 for (int i = 0; i < ArrayOfFilesOutSideSubDirectories.Length; i++)
@@ -82,7 +82,7 @@ namespace TempFilesKiller
                 }
             }
             else
-                Utils.TreatConditionalMessage("There are no files in the temp folder for me to delete!");
+                Utils.TreatConditionalMessage("There are no files in the temp folder to delete!");
 
             Console.WriteLine();
         }
@@ -91,7 +91,7 @@ namespace TempFilesKiller
         {
             try
             {
-                Console.WriteLine($"Deleting directory: {currentDirectoryName}");
+                Console.WriteLine($"Attempting to delete directory: {currentDirectoryName}");
                 Directory.Delete(currentDirectoryName, IS_RECURSIVE);
                 Utils.TreatSuccessMessage($"Directory: '{currentDirectoryName} deleted!'");
             }
