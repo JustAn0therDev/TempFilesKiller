@@ -9,15 +9,15 @@ namespace TempFilesKiller
             try
             {
                 Console.Write("Do you want to run the program? (Y/N or any other character): ");
-                string userResponse = Console.ReadLine().ToUpper();
+                string userResponse = Console.ReadLine().ToLower();
 
-                while (userResponse == "Y")
+                while (userResponse == "y")
                 {
                     DirectoryHandler directoryHandler = new DirectoryHandler();
                     directoryHandler.DeleteAllDirectoriesAndFiles();
 
                     Console.Write("Do you want to run the program again? (Y/N or any other character): ");
-                    userResponse = Console.ReadLine().ToUpper();
+                    userResponse = Console.ReadLine().ToLower();
                 }
             }
             catch (Exception e)
