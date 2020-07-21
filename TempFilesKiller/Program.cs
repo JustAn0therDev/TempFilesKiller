@@ -13,7 +13,7 @@ namespace TempFilesKiller
 
                 while (userResponse == "Y")
                 {
-                    using DirectoryHandler directoryHandler = new DirectoryHandler();
+                    DirectoryHandler directoryHandler = new DirectoryHandler();
                     directoryHandler.DeleteAllDirectoriesAndFiles();
 
                     Console.Write("Do you want to run the program again? (Y/N or any other character): ");
@@ -22,7 +22,7 @@ namespace TempFilesKiller
             }
             catch (Exception e)
             {
-                Utils.TreatExceptionMessage($"Something bad happened while I was trying to read or delete the files! Error: {e.Message}");
+                Utils.TreatExceptionMessage($"Something bad happened while I was trying to read/delete files! Error: {e.Message}");
             }
         }
     }
