@@ -13,8 +13,7 @@ namespace TempFilesKiller
 
                 while (userResponse == "y")
                 {
-                    DirectoryHandler directoryHandler = new DirectoryHandler();
-                    directoryHandler.DeleteAllDirectoriesAndFiles();
+                    new DirectoryHandler().DeleteAllDirectoriesAndFiles();
 
                     Console.Write("Do you want to run the program again? (Y/N or any other character): ");
                     userResponse = Console.ReadLine().ToLower();

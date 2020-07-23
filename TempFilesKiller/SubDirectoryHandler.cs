@@ -5,12 +5,19 @@ namespace TempFilesKiller
 {
     internal static class SubDirectoryHandler
     {
+        internal static void CheckIfThereAreStillFilesLeftThenDeleteDirectory(DirectoryInfo currentDirectory, string directoryName)
+        {
+            if (currentDirectory.GetFiles().Length > 0)
+                Utils.TreatConditionalMessage($"Can't delete directory '{currentDirectory.Name}' because it's not empty!");
+            else
+                DeleteAllSubDirectoriesInDirectory(directoryName);
+        }
+
         internal static void DeleteAllSubDirectoriesInDirectory(string currentDirectoryName)
         {
             try
             {
-                bool isRecursive = true;
-                Directory.Delete(currentDirectoryName, isRecursive);
+                Directory.Delete(currentDirectoryName, true);
                 Utils.TreatSuccessMessage($"Directory: '{currentDirectoryName} deleted!'");
             }
             catch (Exception ex)
