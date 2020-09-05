@@ -5,37 +5,62 @@ namespace TempFilesKiller
 {
     internal class DirectoryHandler
     {
-        private const string TEMP_FOLDER_PATH = "C:/Users/highl/AppData/Local/Temp";
+        private string _path { get; set; }
 
-        private string[] _arrayOfDirectoriesInsideTempDirectory { get; set; }
-        private string[] _arrayOfFilenamesOutsideSubDirectories { get; set; }
-        private DirectoryInfo _mainTempDirectory { get; set; }
-
-        internal DirectoryHandler()
+        /// <summary>
+        /// Receives a path argument on which it will operate.
+        /// </summary>
+        /// <param name="path"></param>
+        public DirectoryHandler(string path)
         {
-            _arrayOfDirectoriesInsideTempDirectory = Directory.GetDirectories(TEMP_FOLDER_PATH);
-            _arrayOfFilenamesOutsideSubDirectories = Directory.GetFiles(TEMP_FOLDER_PATH);
-            _mainTempDirectory = new DirectoryInfo(TEMP_FOLDER_PATH);
+            _path = path;
         }
 
-        internal void DeleteAllDirectoriesAndFiles()
+        /// <summary>
+        /// Tries to delete files and sub directories inside the path given to this class' constructor.
+        /// </summary>
+        public void TryToDeleteFilesAndSubDirectories()
         {
-            FilesHandler.DeleteAllFilesInMainTempDirectory(_mainTempDirectory, _arrayOfFilenamesOutsideSubDirectories);
+            TryDeleteFiles(Directory.GetFiles(_path));
+            TryDeleteSubDirectories(Directory.GetDirectories(_path));
 
-            if (_arrayOfDirectoriesInsideTempDirectory.Length > 0)
-                TryToDeleteFilesAndSubDirectories();
-            else
-                Utils.TreatConditionalMessage("There are no directories in the temp folder to delete!");
         }
 
-        private void TryToDeleteFilesAndSubDirectories()
+        /// <summary>
+        /// Tries to delete the top-level files inside the given directory.
+        /// </summary>
+        private void TryDeleteFiles(string[] files)
         {
-            for (int i = 0; i < _arrayOfDirectoriesInsideTempDirectory.Length; i++)
+            foreach (var file in files)
             {
-                DirectoryInfo currentDirectory = new DirectoryInfo(_arrayOfDirectoriesInsideTempDirectory[i]);
+                try
+                {
+                    File.Delete(file);
+                    Utils.TreatSuccessMessage($"Successfully deleted file: {file}");
+                }
+                catch (Exception ex)
+                {
+                    Utils.TreatExceptionMessage($"Could not delete the file because of the following error: {ex.Message}");
+                }
+            }
+        }
 
-                FilesHandler.TryToDeleteFilesInDirectory(currentDirectory);
-                SubDirectoryHandler.CheckIfThereAreStillFilesLeftThenDeleteDirectory(currentDirectory, _arrayOfDirectoriesInsideTempDirectory[i]);
+        /// <summary>
+        /// Tries to delete the sub-directories inside the given directory.
+        /// </summary>
+        private void TryDeleteSubDirectories(string[] directories)
+        {
+            foreach (var directory in directories)
+            {
+                try
+                {
+                    Directory.Delete(directory, true);
+                    Utils.TreatSuccessMessage($"Successfully deleted directory: {directory}");
+                }
+                catch (Exception ex)
+                {
+                    Utils.TreatExceptionMessage($"Could not delete the file because of the following error: {ex.Message}");
+                }
             }
         }
     }
