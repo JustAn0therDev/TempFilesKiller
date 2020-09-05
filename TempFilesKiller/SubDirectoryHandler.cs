@@ -5,15 +5,24 @@ namespace TempFilesKiller
 {
     internal static class SubDirectoryHandler
     {
-        internal static void CheckIfThereAreStillFilesLeftThenDeleteDirectory(DirectoryInfo currentDirectory, string directoryName)
+        /// <summary>
+        /// Check for existing files in a directory then deletes it if there is none.
+        /// </summary>
+        /// <param name="currentDirectory"></param>
+        /// <param name="directoryName"></param>
+        internal static void CheckIfThereAreStillFilesLeftThenDeleteDirectory(DirectoryInfo currentDirectory)
         {
             if (currentDirectory.GetFiles().Length > 0)
                 Utils.TreatConditionalMessage($"Can't delete directory '{currentDirectory.Name}' because it's not empty!");
             else
-                DeleteAllSubDirectoriesInDirectory(directoryName);
+                TryToDeleteAllSubDirectoriesInDirectory(currentDirectory.Name);
         }
 
-        internal static void DeleteAllSubDirectoriesInDirectory(string currentDirectoryName)
+        /// <summary>
+        /// Tries to delete all subdirectories in a directory.
+        /// </summary>
+        /// <param name="currentDirectoryName"></param>
+        internal static void TryToDeleteAllSubDirectoriesInDirectory(string currentDirectoryName)
         {
             try
             {

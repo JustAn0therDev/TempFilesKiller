@@ -5,13 +5,18 @@ namespace TempFilesKiller
 {
     internal static class FilesHandler
     {
-        internal static void DeleteAllFilesInMainTempDirectory(DirectoryInfo mainTempDirectory, string[] arrayOfFilenamesOutsideSubDirectories)
+        /// <summary>
+        /// Tries to delete all files in the provided directories and files in the same directory level.
+        /// </summary>
+        /// <param name="mainTempDirectory"></param>
+        /// <param name="arrayOfFilenamesOutsideSubDirectories"></param>
+        internal static void TryToDeleteAllFilesInMainTempDirectory(DirectoryInfo mainTempDirectory)
         {
             FileInfo[] filesOutsideSubDirectories = mainTempDirectory.GetFiles();
 
-            if (arrayOfFilenamesOutsideSubDirectories.Length > 0)
+            if (filesOutsideSubDirectories.Length > 0)
             {
-                for (int i = 0; i < arrayOfFilenamesOutsideSubDirectories.Length; i++)
+                for (int i = 0; i < filesOutsideSubDirectories.Length; i++)
                 {
                     try
                     {
@@ -29,6 +34,12 @@ namespace TempFilesKiller
 
             Console.WriteLine();
         }
+
+        /// <summary>
+        /// Tries to delete files in a directory, before deleting the directory itself.
+        /// .NET won't allow a directory with one or more files to be deleted. 
+        /// </summary>
+        /// <param name="currentDirectory">The current directory</param>
         internal static void TryToDeleteFilesInDirectory(DirectoryInfo currentDirectory)
         {
             FileInfo[] filesInCurrentDirectory = currentDirectory.GetFiles();
