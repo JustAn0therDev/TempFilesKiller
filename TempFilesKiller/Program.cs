@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace TempFilesKiller
 {
@@ -10,11 +11,11 @@ namespace TempFilesKiller
             {
                 Console.Write("Do you want to run the program? (Y/N or any other character): ");
                 string userResponse = Console.ReadLine().ToLower();
+                DirectoryHandler directoryHandler = new DirectoryHandler("C:/Users/highl/AppData/Local/Temp");
 
                 while (userResponse == "y")
                 {
-                    new DirectoryHandler().TryToDeleteAllDirectoriesAndFiles();
-
+                    directoryHandler.TryToDeleteFilesAndSubDirectories();
                     Console.Write("Do you want to run the program again? (Y/N or any other character): ");
                     userResponse = Console.ReadLine().ToLower();
                 }
