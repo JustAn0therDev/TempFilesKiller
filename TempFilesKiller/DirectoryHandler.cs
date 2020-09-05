@@ -23,7 +23,6 @@ namespace TempFilesKiller
         {
             TryDeleteFiles(Directory.GetFiles(_path));
             TryDeleteSubDirectories(Directory.GetDirectories(_path));
-
         }
 
         /// <summary>
