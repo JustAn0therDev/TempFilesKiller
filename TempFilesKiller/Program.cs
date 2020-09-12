@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Threading.Tasks;
 
 namespace TempFilesKiller
 {
@@ -15,7 +15,7 @@ namespace TempFilesKiller
 
                 while (userResponse == "y")
                 {
-                    directoryHandler.TryToDeleteFilesAndSubDirectories();
+                    directoryHandler.TryToDeleteFilesAndSubDirectories().Wait();
                     Console.Write("Do you want to run the program again? (Y/N or any other character): ");
                     userResponse = Console.ReadLine().ToLower();
                 }

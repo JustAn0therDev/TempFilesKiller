@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace TempFilesKiller
 {
@@ -19,18 +20,20 @@ namespace TempFilesKiller
         /// <summary>
         /// Tries to delete files and sub directories inside the path given to this class' constructor.
         /// </summary>
-        public void TryToDeleteFilesAndSubDirectories()
+        public async Task TryToDeleteFilesAndSubDirectories()
         {
-            TryDeleteFiles(Directory.GetFiles(_path));
-            TryDeleteSubDirectories(Directory.GetDirectories(_path));
+            Task taskForFileDeletion = await Task.Factory.StartNew(() => TryDeleteFiles(Directory.GetFiles(_path)));
+            Task taskForDirectoryDeletion = await Task.Factory.StartNew(() => TryDeleteFiles(Directory.GetDirectories(_path)));
+
+            await Task.CompletedTask;
         }
 
         /// <summary>
         /// Tries to delete the top-level files inside the given directory.
         /// </summary>
-        private void TryDeleteFiles(string[] files)
+        private Task TryDeleteFiles(string[] files)
         {
-            foreach (var file in files)
+            Parallel.ForEach(files, new ParallelOptions { MaxDegreeOfParallelism = 3 }, file =>
             {
                 try
                 {
@@ -41,15 +44,17 @@ namespace TempFilesKiller
                 {
                     Utils.TreatExceptionMessage($"Could not delete the file because of the following error: {ex.Message}");
                 }
-            }
+            });
+
+            return Task.CompletedTask;
         }
 
         /// <summary>
         /// Tries to delete the sub-directories inside the given directory.
         /// </summary>
-        private void TryDeleteSubDirectories(string[] directories)
+        private Task TryDeleteSubDirectories(string[] directories)
         {
-            foreach (var directory in directories)
+            Parallel.ForEach(directories, new ParallelOptions { MaxDegreeOfParallelism = 3 }, directory =>
             {
                 try
                 {
@@ -60,7 +65,9 @@ namespace TempFilesKiller
                 {
                     Utils.TreatExceptionMessage($"Could not delete the file because of the following error: {ex.Message}");
                 }
-            }
+            });
+
+            return Task.CompletedTask;
         }
     }
 }
