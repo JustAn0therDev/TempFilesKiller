@@ -15,14 +15,14 @@ namespace TempFilesKiller
 
                 while (userResponse == "y")
                 {
-                    directoryHandler.TryToDeleteFilesAndSubDirectories().Wait();
+                    directoryHandler.TryToDeleteFilesAndSubDirectories();
                     Console.Write("Do you want to run the program again? (Y/N or any other character): ");
                     userResponse = Console.ReadLine().ToLower();
                 }
             }
             catch (Exception e)
             {
-                Utils.TreatExceptionMessage($"Something bad happened while I was trying to read/delete files! Error: {e.Message}");
+                Console.WriteLine($"Something bad happened while I was trying to read/delete files! Error: {e.Message}");
             }
         }
     }
