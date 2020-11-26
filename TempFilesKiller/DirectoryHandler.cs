@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Threading;
+﻿using System.IO;
 using System.Threading.Tasks;
+using System;
 
 namespace TempFilesKiller
 {
-    internal class DirectoryHandler
+    internal struct DirectoryHandler
     {
         private string _path { get; set; }
 
@@ -13,13 +12,10 @@ namespace TempFilesKiller
         /// Receives a path argument on which it will operate.
         /// </summary>
         /// <param name="path"></param>
-        public DirectoryHandler(string path)
-        {
-            _path = path;
-        }
+        public DirectoryHandler(string path) => _path = path;
 
         /// <summary>
-        /// Tries to delete files and sub directories inside the path given to this class' constructor.
+        /// Tries to delete files and sub directories inside the path given to its constructor.
         /// </summary>
         public void TryToDeleteFilesAndSubDirectories()
         {
@@ -30,14 +26,14 @@ namespace TempFilesKiller
         /// <summary>
         /// Tries to delete the top-level files inside the given directory.
         /// </summary>
-        private void TryDeleteFiles(string[] files)
+        private void TryDeleteFiles(string[] filePaths)
         {
-            Parallel.ForEach(files, file =>
+            Parallel.ForEach(filePaths, filePath =>
             {
                 try
                 {
-                    File.Delete(file);
-                    Console.WriteLine($"Successfully deleted file: {file}");
+                    File.Delete(filePath);
+                    Console.WriteLine($"Successfully deleted file: {filePath}");
                 }
                 catch (Exception ex)
                 {
@@ -50,14 +46,14 @@ namespace TempFilesKiller
         /// <summary>
         /// Tries to delete the sub-directories inside the given directory.
         /// </summary>
-        private void TryDeleteSubDirectories(string[] directories)
+        private void TryDeleteSubDirectories(string[] fileSubDirectories)
         {
-            Parallel.ForEach(directories, directory =>
+            Parallel.ForEach(fileSubDirectories, subDirectory =>
             {
                 try
                 {
-                    Directory.Delete(directory, true);
-                    Console.WriteLine($"Successfully deleted directory: {directory}");
+                    Directory.Delete(path: subDirectory, recursive: true);
+                    Console.WriteLine($"Successfully deleted directory: {subDirectory}");
                 }
                 catch (Exception ex)
                 {
