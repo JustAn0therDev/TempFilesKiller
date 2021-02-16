@@ -8,16 +8,13 @@ namespace TempFilesKiller
         {
             try
             {
-                DirectoryHandler directoryHandler;
-                string userResponse;
-                
                 Console.Write("Do you want to run the program? (Y/N or any other character): ");
-                userResponse = Console.ReadLine().ToLower();
+                string userResponse = Console.ReadLine().ToLower();
 
                 while (userResponse == "y")
                 {
-                    directoryHandler = new DirectoryHandler("C:/Users/highl/AppData/Local/Temp");
-                    directoryHandler.TryToDeleteFilesAndSubDirectories();
+                    DirectoryHandler directoryHandler = new DirectoryHandler("C:/Users/highl/AppData/Local/Temp");
+                    directoryHandler.TryDeleteFilesAndSubDirectories();
                     Console.Write("Do you want to run the program again? (Y/N or any other character): ");
                     userResponse = Console.ReadLine().ToLower();
                 }

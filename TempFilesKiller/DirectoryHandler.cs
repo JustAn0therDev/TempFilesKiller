@@ -1,10 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
-using System;
 
 namespace TempFilesKiller
 {
-    internal struct DirectoryHandler
+    internal class DirectoryHandler
     {
         private string _path { get; set; }
 
@@ -17,7 +17,7 @@ namespace TempFilesKiller
         /// <summary>
         /// Tries to delete files and sub directories inside the path given to its constructor.
         /// </summary>
-        public void TryToDeleteFilesAndSubDirectories()
+        public void TryDeleteFilesAndSubDirectories()
         {
             TryDeleteFiles(Directory.GetFiles(_path));
             TryDeleteSubDirectories(Directory.GetDirectories(_path));
@@ -44,7 +44,7 @@ namespace TempFilesKiller
         }
 
         /// <summary>
-        /// Tries to delete the sub-directories inside the given directory.
+        /// Tries to delete the sub-directories inside a given directory.
         /// </summary>
         private void TryDeleteSubDirectories(string[] fileSubDirectories)
         {
